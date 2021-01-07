@@ -1,0 +1,19 @@
+Step Description,Expected Outcome
+Login to HCP portal as Location Provider,HC Portal view for Location Provider shows
+Go to Recipients tab,"Any data in the system should display, otherwise if no data a message should show saying ""there is no data at this time"""
+"Click on the right button ""Create New Recipient""",The popup window displays a form to fill and create a new recipient
+"Fill out the form leaving the employer field blank and choose ""First Responders"" as the Industry","Form is editable and user can can choose ""First Responders"" from the dropdown list"
+"Click ""submit"" at the bottom",When clicking the submit button any validation is done on required fields
+Check the checkbox to give consent,"The ""Vaccine Registration"" form should display now with a checkbox to get consent"
+"Enter home or mobile phone number as well as your race, ethnicity, and gender ",The form displays correctly with no typos and form fields allow user input
+"Check if you are a front line worker or not,
+Check yes if you work at a senior care or long term care facility",If no is chosen for any of the bottom 3 fields then the text fields should be grayed out and not allow user input
+"Click ""next""","Verify that the ""next"" button displays at the bottom right"
+Choose zero or the number of symptoms you have or have experienced in the last 30 days,Verify that the radio buttons are displayed and that the user can select one of the 3 choices
+"Click ""next""","Verify that the ""next"" button displays at the bottom right"
+"The information entered thus far will display for you to confirm by clicking the ""confirm"" button in the bottom right or clciking the ""back"" button to go back and edit any information","Verify that the information entered thus far displays correctly and that the ""confirm"" button is displayed along with a ""back"" button"
+"When ""confirm"" is hit you are told what phase number you are",Verify that the phase number is displayed and is correct/valid
+Go to your inbox for the new recipient to create their account,Verify that the email is sent and received
+Use the link in the email to create the recipient's password for their given username stated in the email,Verify that the link works and takes you to the Recipient Portal to create the new account for the specified username
+Create a password for the account,Verify that the page comes up and lets you create a password the recipient
+"Click ""submit"" at the bottom",Verify that the submit button works and that clicking it when done brings the user to the Recipient Portal home page
