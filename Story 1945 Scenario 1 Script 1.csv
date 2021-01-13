@@ -1,5 +1,5 @@
 Step Description,Expected Outcome
-Login to HCP portal as Location Provider,HC Portal view for Location Provider shows
+Login to HCP portal as Location Provider,HCP Portal view for Location Provider shows
 Go to Recipients tab,"Any data in the system should display, otherwise if no data a message should show saying ""there is no data at this time"""
 "Click on the right button ""Create New Recipient""",The popup window displays a form to fill and create a new recipient
 "Fill out the form leaving the employer field blank and choose ""First Responders"" as the Industry","Form is editable and user can can choose ""First Responders"" from the dropdown list"

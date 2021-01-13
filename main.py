@@ -5,20 +5,6 @@ sys.path.append(parentdir)
 
 
 import numpy
-#import tensorflow as tf
-#import keras
-
-
-
-#  Find info. on hardware on this machine
-#from tensorflow.python.client import device_lib
-#print(device_lib.list_local_devices())
-#print("TensorFlow version: ", tf.__version__)
-
-
-
-
-
 # real code
 # all from https://stackabuse.com/text-generation-with-python-and-tensorflow-keras/
 import sys
@@ -58,7 +44,7 @@ vocab_len = len(chars)
 print ("Total number of characters:", input_len)
 print ("Total vocab:", vocab_len)
 
-seq_length = 100
+seq_length = 150
 x_data = []
 y_data = []
 
@@ -91,57 +77,64 @@ y = np_utils.to_categorical(y_data)
 # we doin' it!!!
 model = Sequential()
 model.add(LSTM(256, input_shape=(X.shape[1], X.shape[2]), return_sequences=True))
-model.add(Dropout(0.2))
+model.add(Dropout(0.2)) #article used 0.2
 model.add(LSTM(256, return_sequences=True))
-model.add(Dropout(0.2))
+model.add(Dropout(0.2)) #article used 0.2
 model.add(LSTM(128))
-model.add(Dropout(0.2))
+model.add(Dropout(0.2)) #article used 0.2
 model.add(Dense(y.shape[1], activation='softmax'))
 
-model.compile(loss='categorical_crossentropy', optimizer='adam')
+print("-----model COMPILE----")
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 
 
 filepath = "model_weights_saved.hdf5"
-checkpoint = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
-desired_callbacks = [checkpoint]
+checkpoint = ModelCheckpoint(filepath, monitor='accuracy', verbose=1, save_best_only=True, mode='max')
+checkpoint2 = ModelCheckpoint(filepath, monitor='loss', verbose=1, save_best_only=True, mode='min')
+desired_callbacks = [checkpoint, checkpoint2]
 
 
 
 # Fit the model and let it train
-model.fit(X, y, epochs=5, batch_size=256, callbacks=desired_callbacks)
+print("-----FIT MODEL----")
+model.fit(X, y, epochs=75, batch_size=128, callbacks=desired_callbacks)
 
-
-
+#----------
+import time
+startTime = time.time()
+#----------
 
 filename = "model_weights_saved.hdf5"
 model.load_weights(filename)
 model.compile(loss='categorical_crossentropy', optimizer='adam')
 
+endTime = time.time()
 
+print(startTime, ', ', endTime)
+print("My program took", time.strftime("%H:%M:%S", time.gmtime(endTime-startTime)), "to run")
 
 num_to_char = dict((i, c) for i, c in enumerate(chars))
 
 
 start = numpy.random.randint(0, len(x_data) - 1)
-#while x_data[start] == "":
-    #start = numpy.random.randint(0, len(x_data) - 1)
 pattern = x_data[start]
 print("Random Seed characters:")
 print("\"", ''.join([num_to_char[value] for value in pattern]), "\"")
 
-
-
-
-for i in range(150):
+for i in range(50):
     x = numpy.reshape(pattern, (1, len(pattern), 1))
     x = x / float(vocab_len)
     prediction = model.predict(x, verbose=0)
     index = numpy.argmax(prediction)
     result = num_to_char[index]
+    if result == ' ': print("it's a blank space")
+    
     seq_in = [num_to_char[value] for value in pattern]
 
     sys.stdout.write(result)
 
     pattern.append(index)
     pattern = pattern[1:len(pattern)]
+    numpy.savetxt(os.getcwd() + "\\test.csv", prediction, delimiter=',')  #FAIL = seq_in, result, pattern
+                                        # half right = prediction
